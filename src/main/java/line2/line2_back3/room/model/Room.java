@@ -22,6 +22,6 @@ public class Room {
     private int singleBed;
     private int doubleBed;
     private int bedding;
-    private String gender;
+    private boolean gender;
     private int maxHeadCount;
 }

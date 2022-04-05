@@ -21,7 +21,7 @@ public class User {
     private String loginName;
     private String password;
     private String userName;
-    private String userGender;
+    private boolean userGender;
     private String userPhoneNumber;
     private String userEmail;
     private String userImg;
