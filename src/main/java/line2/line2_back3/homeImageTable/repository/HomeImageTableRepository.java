@@ -9,5 +9,5 @@ import java.util.List;
 public interface HomeImageTableRepository extends JpaRepository<HomeImageTable, Long> {
     List<HomeImageTable> findAllByHomeId(Long id);
 
-    HomeImageTable findByHomeId(Long id);
+    HomeImageTable findFirstByHomeId(Long id);
 }

@@ -57,7 +57,7 @@ public class HomeImageTableServiceImpl implements HomeImageTableService {
     public String findByHomeId(Long id) {
         try {
             log.info("HomeImageTableService find by home id one image({}) start", id);
-            return homeImageTableRepository.findByHomeId(id).getImage().getImageName();
+            return homeImageTableRepository.findFirstByHomeId(id).getImage().getImageName();
         } catch (Exception e) {
             log.error("HomeImageTableService find by home id one image failure, error: {}", e.getMessage());
             return null;
