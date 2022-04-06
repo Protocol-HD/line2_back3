@@ -7,5 +7,7 @@ import line2.line2_back3.homeImageTable.model.HomeImageTable;
 import java.util.List;
 
 public interface HomeImageTableRepository extends JpaRepository<HomeImageTable, Long> {
-    List<HomeImageTable> findByHomeId(Long id);
+    List<HomeImageTable> findAllByHomeId(Long id);
+
+    HomeImageTable findByHomeId(Long id);
 }

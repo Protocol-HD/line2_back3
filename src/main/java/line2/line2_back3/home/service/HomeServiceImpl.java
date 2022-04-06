@@ -190,7 +190,7 @@ public class HomeServiceImpl implements HomeService {
             List<Room> rooms = new ArrayList<>();
 
             log.info("2. find all home image");
-            homeImageTableRepository.findByHomeId(id).forEach(homeImageTable -> {
+            homeImageTableRepository.findAllByHomeId(id).forEach(homeImageTable -> {
                 images.add(homeImageTable.getImage().getImageName());
             });
             log.info("3. find all home policies");
@@ -260,7 +260,7 @@ public class HomeServiceImpl implements HomeService {
     }
 
     public void HomeImageDelete(Long id) {
-        homeImageTableRepository.findByHomeId(id).forEach(homeImage -> {
+        homeImageTableRepository.findAllByHomeId(id).forEach(homeImage -> {
             homeImageTableRepository.delete(homeImage);
             imageRepository.deleteById(homeImage.getImage().getId());
         });
@@ -341,7 +341,7 @@ public class HomeServiceImpl implements HomeService {
                     .coordinateX(home.getCoordinateX())
                     .coordinateY(home.getCoordinateY())
                     .homeCategoryId(home.getHomeCategory().getId())
-                    .image(homeImageTableRepository.findByHomeId(home.getId()).get(0).getImage().getImageName())
+                    .image(homeImageTableRepository.findAllByHomeId(home.getId()).get(0).getImage().getImageName())
                     .homeFacilities(homeFacilities)
                     .build());
         });

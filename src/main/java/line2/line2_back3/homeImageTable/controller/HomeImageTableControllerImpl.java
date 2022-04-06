@@ -60,15 +60,29 @@ public class HomeImageTableControllerImpl implements HomeImageTableController{
 
     @Override
     @GetMapping("/v1/home_image_table/home/{id}")
-    public List<HomeImageTable> findByHomeId(@PathVariable Long id) {
+    public List<HomeImageTable> findAllByHomeId(@PathVariable Long id) {
         try {
             log.info("HomeImageTableController find by home id HomeImageTable(id: {}) start", id);
-            return homeImageTableService.findByHomeId(id);
+            return homeImageTableService.findAllByHomeId(id);
         } catch (Exception e) {
             log.error("HomeImageTableController find by home id HomeImageTable failure, error: {}", e.getMessage());
             return null;
         } finally {
             log.info("HomeImageTableController find by home id HomeImageTable end");
+        }
+    }
+
+    @Override
+    @GetMapping("/v1/home_image_table/home/one/{id}")
+    public String findByHomeId(@PathVariable Long id) {
+        try {
+            log.info("HomeImageTableController find by home id one image({}) start", id);
+            return homeImageTableService.findByHomeId(id);
+        } catch (Exception e) {
+            log.error("HomeImageTableController find by home id one image failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeImageTableController find by home id one image end");
         }
     }
 }

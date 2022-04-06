@@ -11,5 +11,7 @@ public interface HomeImageTableController {
 
     void deleteById(Long id);
 
-    List<HomeImageTable> findByHomeId(Long id);
+    List<HomeImageTable> findAllByHomeId(Long id);
+
+    String findByHomeId(Long id);
 }

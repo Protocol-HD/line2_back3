@@ -41,15 +41,28 @@ public class HomeImageTableServiceImpl implements HomeImageTableService {
     }
 
     @Override
-    public List<HomeImageTable> findByHomeId(Long id) {
+    public List<HomeImageTable> findAllByHomeId(Long id) {
         try {
-            log.info("HomeImageTableService find by home id HomeImageTable({}) start", id);
-            return homeImageTableRepository.findByHomeId(id);
+            log.info("HomeImageTableService find by home id HomeImageTables(id: {}) start", id);
+            return homeImageTableRepository.findAllByHomeId(id);
         } catch (Exception e) {
-            log.error("HomeImageTableService find by home id HomeImageTable failure, error: {}", e.getMessage());
+            log.error("HomeImageTableService find by home id HomeImageTables failure, error: {}", e.getMessage());
             return null;
         } finally {
-            log.info("HomeImageTableService find by home id HomeImageTable end");
+            log.info("HomeImageTableService find by home id HomeImageTables end");
+        }
+    }
+
+    @Override
+    public String findByHomeId(Long id) {
+        try {
+            log.info("HomeImageTableService find by home id one image({}) start", id);
+            return homeImageTableRepository.findByHomeId(id).getImage().getImageName();
+        } catch (Exception e) {
+            log.error("HomeImageTableService find by home id one image failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeImageTableService find by home id one image end");
         }
     }
 }
