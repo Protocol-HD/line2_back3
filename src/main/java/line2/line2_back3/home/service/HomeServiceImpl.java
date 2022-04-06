@@ -316,7 +316,7 @@ public class HomeServiceImpl implements HomeService {
     public List<HomeListDto> findByHomeAddress(String homeAddress) {
         try {
             log.info("HomeService find by home address Homes(homeAddress: {}) start", homeAddress);
-            return homeListToHomeListDto(homeRepository.findByHomeAddressContaining(homeAddress));
+            return homeListToHomeListDto(homeRepository.findByHomeAddressContainingAndStatus(homeAddress, true));
         } catch (Exception e) {
             log.error("HomeService find by home address Homes failure, error: {}", e.getMessage());
             return null;
