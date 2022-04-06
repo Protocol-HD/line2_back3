@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import line2.line2_back3.homeCategory.model.HomeCategory;
 import line2.line2_back3.restApi.models.User;
 
@@ -30,4 +32,6 @@ public class Home {
     @JoinColumn(name = "user_id")
     private User user;
     private String homeZipCode;
+    @ColumnDefault("true")
+    private boolean status;
 }

@@ -30,4 +30,5 @@ public class HomeDto {
     private String homePolicyCustom;
     private List<Long> homeFacilities;
     private List<Room> rooms;
+    private boolean status;
 }

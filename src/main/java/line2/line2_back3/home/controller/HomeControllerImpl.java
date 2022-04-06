@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import line2.line2_back3.home.model.Home;
 import line2.line2_back3.home.model.HomeDto;
 import line2.line2_back3.home.model.HomeListDto;
+import line2.line2_back3.home.model.HomeStatusDto;
 import line2.line2_back3.home.service.HomeService;
 import line2.line2_back3.systemMessage.SystemMessage;
 
@@ -126,4 +127,21 @@ public class HomeControllerImpl implements HomeController {
             log.info("HomeController find by home address Homes end");
         }
     }
+
+    @Override
+    @PutMapping("/v1/home/change_status")
+    public SystemMessage changeStatus(@RequestBody HomeStatusDto homeStatusDto) {
+        try {
+            log.info("HomeController change status Home({}) start", homeStatusDto);
+            return homeService.changeStatus(homeStatusDto);
+        } catch (Exception e) {
+            log.error("HomeController change status Home failure, error: {}", e.getMessage());
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("숙소 상태 변경 실패")
+                    .build();
+        } finally {
+            log.info("HomeController change status Home end");
+        }
+    };
 }

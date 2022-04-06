@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import line2.line2_back3.home.model.Home;
 import line2.line2_back3.home.model.HomeDto;
 import line2.line2_back3.home.model.HomeListDto;
+import line2.line2_back3.home.model.HomeStatusDto;
 import line2.line2_back3.home.repository.HomeRepository;
 import line2.line2_back3.homeCategory.repository.HomeCategoryRepository;
 import line2.line2_back3.homeFacility.repository.HomeFacilityRepository;
@@ -52,8 +53,7 @@ public class HomeServiceImpl implements HomeService {
                     HomeImageTable.builder()
                             .home(home)
                             .image(imageRepository.save(Image.builder().imageName(image).build()))
-                            .build()
-            );
+                            .build());
         });
     }
 
@@ -63,8 +63,7 @@ public class HomeServiceImpl implements HomeService {
                     HomePolicyTable.builder()
                             .home(home)
                             .homePolicy(homePolicyRepository.findById(homePolicy).get())
-                            .build()
-            );
+                            .build());
         });
         homePolicyTableRepository.save(
                 HomePolicyTable.builder()
@@ -73,10 +72,8 @@ public class HomeServiceImpl implements HomeService {
                                 HomePolicy.builder()
                                         .homePolicy(homePolicyCustom)
                                         .policyType(3)
-                                        .build())
-                        )
-                        .build()
-        );
+                                        .build()))
+                        .build());
     }
 
     public void HomeFacilityAdd(List<Long> homeFacilities, Home home) {
@@ -85,8 +82,7 @@ public class HomeServiceImpl implements HomeService {
                     HomeFacilityTable.builder()
                             .home(home)
                             .homeFacility(homeFacilityRepository.findById(homeFacility).get())
-                            .build()
-            );
+                            .build());
         });
     }
 
@@ -223,9 +219,11 @@ public class HomeServiceImpl implements HomeService {
                     .homeZipCode(home.getHomeZipCode())
                     .images(images)
                     .homePolicies(homePolicies.subList(0, homePolicies.size() - 1))
-                    .homePolicyCustom(homePolicyRepository.findById(homePolicies.get(homePolicies.size() - 1)).get().getHomePolicy())
+                    .homePolicyCustom(homePolicyRepository.findById(homePolicies.get(homePolicies.size() - 1)).get()
+                            .getHomePolicy())
                     .homeFacilities(homeFacilities)
                     .rooms(rooms)
+                    .status(home.isStatus())
                     .build();
         } catch (Exception e) {
             log.error("HomeService find by id Home failure, error: {}", e.getMessage());
@@ -348,5 +346,27 @@ public class HomeServiceImpl implements HomeService {
                     .build());
         });
         return homeListDtos;
+    }
+
+    @Override
+    public SystemMessage changeStatus(HomeStatusDto homeStatusDto) {
+        try {
+            log.info("HomeService change status Home({}) start", homeStatusDto);
+            Home home = homeRepository.findById(homeStatusDto.getHomeId()).get();
+            home.setStatus(homeStatusDto.isStatus());
+            homeRepository.save(home);
+            return SystemMessage.builder()
+                    .code(1)
+                    .message("숙소 상태 변경 성공")
+                    .build();
+        } catch (Exception e) {
+            log.error("HomeService change status Home failure, error: {}", e.getMessage());
+            return SystemMessage.builder()
+                    .code(2)
+                    .message("숙소 상태 변경 실패")
+                    .build();
+        } finally {
+            log.info("HomeService change status Home end");
+        }
     }
 }

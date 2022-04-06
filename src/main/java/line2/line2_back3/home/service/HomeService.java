@@ -5,6 +5,7 @@ import java.util.List;
 import line2.line2_back3.home.model.Home;
 import line2.line2_back3.home.model.HomeDto;
 import line2.line2_back3.home.model.HomeListDto;
+import line2.line2_back3.home.model.HomeStatusDto;
 import line2.line2_back3.systemMessage.SystemMessage;
 
 public interface HomeService {
@@ -21,4 +22,6 @@ public interface HomeService {
     SystemMessage deleteById(Long id);
 
     List<HomeListDto> findByHomeAddress(String homeAddress);
+
+    SystemMessage changeStatus(HomeStatusDto homeStatusDto);
 }
