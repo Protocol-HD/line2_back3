@@ -2,7 +2,6 @@ package line2.line2_back3.restApi;
 
 import java.util.List;
 
-import org.apache.coyote.Response;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
