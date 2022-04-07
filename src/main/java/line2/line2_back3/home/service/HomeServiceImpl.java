@@ -65,7 +65,7 @@ public class HomeServiceImpl implements HomeService {
                             .homePolicy(homePolicyRepository.findById(homePolicy).get())
                             .build());
         });
-        homePolicyTableRepository.save(
+        homePolicyTableRepository.save( 
                 HomePolicyTable.builder()
                         .home(home)
                         .homePolicy(homePolicyRepository.save(

@@ -4,10 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import line2.line2_back3.homeCategory.model.HomeCategory;
 import line2.line2_back3.restApi.models.User;
+import line2.line2_back3.util.BaseTime;
 
 @Entity
 @Getter
@@ -16,7 +15,7 @@ import line2.line2_back3.restApi.models.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Home {
+public class Home extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
