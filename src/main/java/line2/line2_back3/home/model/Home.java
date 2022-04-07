@@ -32,6 +32,5 @@ public class Home {
     @JoinColumn(name = "user_id")
     private User user;
     private String homeZipCode;
-    @ColumnDefault("true")
     private boolean status;
 }

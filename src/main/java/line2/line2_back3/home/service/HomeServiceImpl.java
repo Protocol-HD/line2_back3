@@ -127,6 +127,7 @@ public class HomeServiceImpl implements HomeService {
                     .homeInformation(homeDto.getHomeInformation())
                     .user(restApiService.getUserById(homeDto.getUserId()))
                     .homeZipCode(homeDto.getHomeZipCode())
+                    .status(true)
                     .build());
 
             log.info("2. save home images");
