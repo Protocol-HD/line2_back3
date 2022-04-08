@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import line2.line2_back3.checkTime.repository.CheckTimeRepository;
 import line2.line2_back3.home.model.Home;
 import line2.line2_back3.home.model.HomeDto;
 import line2.line2_back3.home.model.HomeListDto;
@@ -46,6 +47,7 @@ public class HomeServiceImpl implements HomeService {
     private final RoomRepository roomRepository;
     private final HomeRoomTableRepository homeRoomTableRepository;
     private final RestApiService restApiService;
+    private final CheckTimeRepository checkTimeRepository;
 
     public void HomeImageAdd(List<String> images, Home home) {
         images.forEach(image -> {
@@ -128,6 +130,8 @@ public class HomeServiceImpl implements HomeService {
                     .user(restApiService.getUserById(homeDto.getUserId()))
                     .homeZipCode(homeDto.getHomeZipCode())
                     .status(true)
+                    .checkInTime(checkTimeRepository.findById(homeDto.getCheckInTimeId()).get())
+                    .checkOutTime(checkTimeRepository.findById(homeDto.getCheckOutTimeId()).get())
                     .build());
 
             log.info("2. save home images");
@@ -225,6 +229,8 @@ public class HomeServiceImpl implements HomeService {
                     .homeFacilities(homeFacilities)
                     .rooms(rooms)
                     .status(home.isStatus())
+                    .checkInTimeId(home.getCheckInTime().getId())
+                    .checkOutTimeId(home.getCheckOutTime().getId())
                     .build();
         } catch (Exception e) {
             log.error("HomeService find by id Home failure, error: {}", e.getMessage());

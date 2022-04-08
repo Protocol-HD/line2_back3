@@ -31,4 +31,6 @@ public class HomeDto {
     private List<Long> homeFacilities;
     private List<Room> rooms;
     private boolean status;
+    private Long checkInTimeId;
+    private Long checkOutTimeId;
 }
