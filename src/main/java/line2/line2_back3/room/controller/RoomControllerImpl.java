@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import line2.line2_back3.room.model.Room;
 import line2.line2_back3.room.service.RoomService;
-import line2.line2_back3.systemMessage.SystemMessage;
 
 @RestController
 @Slf4j

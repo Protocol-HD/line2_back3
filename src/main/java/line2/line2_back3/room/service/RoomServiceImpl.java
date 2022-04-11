@@ -4,20 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import line2.line2_back3.home.model.Home;
-import line2.line2_back3.home.repository.HomeRepository;
-import line2.line2_back3.homeRoomTable.repository.HomeRoomTableRepository;
 import line2.line2_back3.room.model.Room;
 import line2.line2_back3.room.repository.RoomRepository;
-import line2.line2_back3.systemMessage.SystemMessage;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
     private final RoomRepository roomRepository;
-    private final HomeRoomTableRepository homeRoomTableRepository;
-    private final HomeRepository homeRepository;
 
     @Override
     public Room save(Room room) {
