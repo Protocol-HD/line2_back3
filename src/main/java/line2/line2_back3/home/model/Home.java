@@ -28,9 +28,7 @@ public class Home extends BaseTime {
     @JoinColumn(name = "home_category_id")
     private HomeCategory homeCategory;
     private String homeInformation;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Long userId;
     private String homeZipCode;
     private boolean status;
     @ManyToOne
