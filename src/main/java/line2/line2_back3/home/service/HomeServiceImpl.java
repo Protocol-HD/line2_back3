@@ -257,7 +257,7 @@ public class HomeServiceImpl implements HomeService {
     public List<HomeListDto> findAll() {
         try {
             log.info("HomeService find all Homes start");
-            return homeListToHomeListDto(homeRepository.findAll());
+            return homeListToHomeListDto(homeRepository.findByStatus(true));
         } catch (Exception e) {
             log.error("HomeService find all Homes failure, error: {}", e.getMessage());
             return null;
