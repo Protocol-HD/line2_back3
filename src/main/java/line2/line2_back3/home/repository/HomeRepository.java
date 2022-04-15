@@ -10,4 +10,6 @@ public interface HomeRepository extends JpaRepository<Home, Long> {
     List<Home> findByHomeAddressContainingAndStatus(String homeAddress, boolean status);
 
     List<Home> findByStatus(boolean status);
+
+    Home findByUserId(Long id);
 }

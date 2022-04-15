@@ -364,14 +364,16 @@ public class HomeServiceImpl implements HomeService {
     public List<HomeListDto> findByHomeAddressAndCheckIn(HomeSearchDto homeSearchDto) {
         try {
             log.info("HomeService find by home address and check in Homes({}) start", homeSearchDto);
-            List<Home> homes = homeRepository.findByHomeAddressContainingAndStatus(homeSearchDto.getHomeAddress(), true);
+            List<Home> homes = homeRepository.findByHomeAddressContainingAndStatus(homeSearchDto.getHomeAddress(),
+                    true);
             homeRepository.findByHomeAddressContainingAndStatus(homeSearchDto.getHomeAddress(), true).forEach(home -> {
                 maxStatus = false;
                 homeRoomTableRepository.findByHomeId(home.getId()).forEach(homeRoomTable -> {
                     log.info("compare in HomeRoomTable headCount: {}", homeRoomTable);
                     if (homeRoomTable.getRoom().getMaxHeadCount() <= restApiService
                             .getHeadCount(ReservationHeadCountDto.builder().roomId(homeRoomTable.getRoom().getId())
-                                    .checkIn(homeSearchDto.getCheckIn()).checkOut(homeSearchDto.getCheckIn()).build())) {
+                                    .checkIn(homeSearchDto.getCheckIn()).checkOut(homeSearchDto.getCheckIn())
+                                    .build())) {
                         maxStatus = true;
                     }
                 });
@@ -408,6 +410,19 @@ public class HomeServiceImpl implements HomeService {
                     .build();
         } finally {
             log.info("HomeService change status Home end");
+        }
+    }
+
+    @Override
+    public Home findByUserId(Long id) {
+        try {
+            log.info("HomeService find by user id Home start");
+            return homeRepository.findByUserId(id);
+        } catch (Exception e) {
+            log.error("HomeService find by user id Home failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeService find by user id Home end");
         }
     }
 }

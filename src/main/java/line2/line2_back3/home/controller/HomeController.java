@@ -27,4 +27,6 @@ public interface HomeController {
     List<HomeListDto> findByHomeAddressAndCheckIn(HomeSearchDto homeSearchDto);
 
     SystemMessage changeStatus(HomeStatusDto homeStatusDto);
+
+    Home findByUserId(Long id);
 }

@@ -129,7 +129,6 @@ public class HomeControllerImpl implements HomeController {
         }
     }
 
-
     @Override
     @PostMapping("/v1/home/find")
     public List<HomeListDto> findByHomeAddressAndCheckIn(@RequestBody HomeSearchDto homeSearchDto) {
@@ -159,5 +158,18 @@ public class HomeControllerImpl implements HomeController {
         } finally {
             log.info("HomeController change status Home end");
         }
-    };
+    }
+
+    @Override
+    public Home findByUserId(Long id) {
+        try {
+            log.info("HomeController find by user id Home start");
+            return homeService.findByUserId(id);
+        } catch (Exception e) {
+            log.error("HomeController find by user id Home failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeController find by user id Home end");
+        }
+    }
 }
