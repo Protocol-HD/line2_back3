@@ -1,14 +1,17 @@
 package line2.line2_back3.restApi;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import line2.line2_back3.restApi.models.Reservation;
+import line2.line2_back3.restApi.models.ReservationHeadCountDto;
 import line2.line2_back3.restApi.models.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,5 +59,13 @@ public class RestApiService {
                 });
         log.info("{}", response);
         return response.getBody();
+    }
+
+    public int getHeadCount(ReservationHeadCountDto reservationHeadCountDto) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = reservationServer + "/book/v1/reservation/head_count";
+        int headCount = restTemplate.postForObject(url, reservationHeadCountDto, int.class);
+        log.info("{}", headCount);
+        return headCount;
     }
 }

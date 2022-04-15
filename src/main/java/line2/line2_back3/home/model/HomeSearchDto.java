@@ -1,0 +1,19 @@
+package line2.line2_back3.home.model;
+
+import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Getter
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class HomeSearchDto {
+    private String homeAddress;
+    private Date checkIn;
+}

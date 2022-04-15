@@ -8,6 +8,7 @@ import line2.line2_back3.checkTime.repository.CheckTimeRepository;
 import line2.line2_back3.home.model.Home;
 import line2.line2_back3.home.model.HomeDto;
 import line2.line2_back3.home.model.HomeListDto;
+import line2.line2_back3.home.model.HomeSearchDto;
 import line2.line2_back3.home.model.HomeStatusDto;
 import line2.line2_back3.home.repository.HomeRepository;
 import line2.line2_back3.homeCategory.repository.HomeCategoryRepository;
@@ -25,11 +26,13 @@ import line2.line2_back3.homeRoomTable.repository.HomeRoomTableRepository;
 import line2.line2_back3.image.model.Image;
 import line2.line2_back3.image.repository.ImageRepository;
 import line2.line2_back3.restApi.RestApiService;
+import line2.line2_back3.restApi.models.ReservationHeadCountDto;
 import line2.line2_back3.room.model.Room;
 import line2.line2_back3.room.repository.RoomRepository;
 import line2.line2_back3.systemMessage.SystemMessage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -67,7 +70,7 @@ public class HomeServiceImpl implements HomeService {
                             .homePolicy(homePolicyRepository.findById(homePolicy).get())
                             .build());
         });
-        homePolicyTableRepository.save( 
+        homePolicyTableRepository.save(
                 HomePolicyTable.builder()
                         .home(home)
                         .homePolicy(homePolicyRepository.save(
@@ -353,6 +356,37 @@ public class HomeServiceImpl implements HomeService {
                     .build());
         });
         return homeListDtos;
+    }
+
+    boolean maxStatus;
+
+    @Override
+    public List<HomeListDto> findByHomeAddressAndCheckIn(HomeSearchDto homeSearchDto) {
+        try {
+            log.info("HomeService find by home address and check in Homes({}) start", homeSearchDto);
+            List<Home> homes = homeRepository.findByHomeAddressContainingAndStatus(homeSearchDto.getHomeAddress(), true);
+            homeRepository.findByHomeAddressContainingAndStatus(homeSearchDto.getHomeAddress(), true).forEach(home -> {
+                maxStatus = false;
+                homeRoomTableRepository.findByHomeId(home.getId()).forEach(homeRoomTable -> {
+                    log.info("compare in HomeRoomTable headCount: {}", homeRoomTable);
+                    if (homeRoomTable.getRoom().getMaxHeadCount() <= restApiService
+                            .getHeadCount(ReservationHeadCountDto.builder().roomId(homeRoomTable.getRoom().getId())
+                                    .checkIn(homeSearchDto.getCheckIn()).checkOut(homeSearchDto.getCheckIn()).build())) {
+                        maxStatus = true;
+                    }
+                });
+                if (maxStatus) {
+                    log.info("remove homes in {}", home);
+                    homes.remove(home);
+                }
+            });
+            return homeListToHomeListDto(homes);
+        } catch (Exception e) {
+            log.error("HomeService find by home address and check in Homes failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeService find by home address and check in Homes end");
+        }
     }
 
     @Override

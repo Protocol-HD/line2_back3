@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import line2.line2_back3.home.model.Home;
 import line2.line2_back3.home.model.HomeDto;
 import line2.line2_back3.home.model.HomeListDto;
+import line2.line2_back3.home.model.HomeSearchDto;
 import line2.line2_back3.home.model.HomeStatusDto;
 import line2.line2_back3.home.service.HomeService;
 import line2.line2_back3.systemMessage.SystemMessage;
@@ -125,6 +126,21 @@ public class HomeControllerImpl implements HomeController {
             return null;
         } finally {
             log.info("HomeController find by home address Homes end");
+        }
+    }
+
+
+    @Override
+    @PostMapping("/v1/home/find")
+    public List<HomeListDto> findByHomeAddressAndCheckIn(@RequestBody HomeSearchDto homeSearchDto) {
+        try {
+            log.info("HomeController find by home address and check in Homes({}) start", homeSearchDto);
+            return homeService.findByHomeAddressAndCheckIn(homeSearchDto);
+        } catch (Exception e) {
+            log.error("HomeController find by home address and check in Homes failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeController find by home address and check in Homes end");
         }
     }
 
