@@ -20,10 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 public class RestApiService {
-    // String reservationServer = "http://openjdk:8080";
-    // String userServer = "http://openjdk2:8080";
-    String reservationServer = "http://localhost:8080";
-    String userServer = "http://localhost:8081";
+    String reservationServer = "http://openjdk:8080";
+    String userServer = "http://openjdk2:8080";
+    // String reservationServer = "http://localhost:8080";
+    // String userServer = "http://localhost:8081";
 
     public User getUserById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
