@@ -161,7 +161,8 @@ public class HomeControllerImpl implements HomeController {
     }
 
     @Override
-    public Home findByUserId(Long id) {
+    @GetMapping("/v1/home/user/{id}")
+    public HomeDto findByUserId(@PathVariable Long id) {
         try {
             log.info("HomeController find by user id Home start");
             return homeService.findByUserId(id);

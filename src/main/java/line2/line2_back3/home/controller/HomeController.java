@@ -28,5 +28,5 @@ public interface HomeController {
 
     SystemMessage changeStatus(HomeStatusDto homeStatusDto);
 
-    Home findByUserId(Long id);
+    HomeDto findByUserId(Long id);
 }

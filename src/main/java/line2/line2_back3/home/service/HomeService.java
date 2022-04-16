@@ -1,6 +1,5 @@
 package line2.line2_back3.home.service;
 
-import java.util.Date;
 import java.util.List;
 
 import line2.line2_back3.home.model.Home;
@@ -29,5 +28,5 @@ public interface HomeService {
 
     SystemMessage changeStatus(HomeStatusDto homeStatusDto);
 
-    Home findByUserId(Long id);
+    HomeDto findByUserId(Long id);
 }

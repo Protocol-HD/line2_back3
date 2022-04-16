@@ -32,7 +32,6 @@ import line2.line2_back3.room.repository.RoomRepository;
 import line2.line2_back3.systemMessage.SystemMessage;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -186,37 +185,35 @@ public class HomeServiceImpl implements HomeService {
         }
     }
 
-    @Override
-    public HomeDto findById(Long id) {
+    public HomeDto findHome(Home home) {
         try {
-            log.info("HomeService find by id Home(id: {}) start", id);
+            log.info("HomeService find Home({}) start", home);
             log.info("1. find home");
-            Home home = homeRepository.findById(id).get();
             List<String> images = new ArrayList<>();
             List<Long> homePolicies = new ArrayList<>();
             List<Long> homeFacilities = new ArrayList<>();
             List<Room> rooms = new ArrayList<>();
 
             log.info("2. find all home image");
-            homeImageTableRepository.findAllByHomeId(id).forEach(homeImageTable -> {
+            homeImageTableRepository.findAllByHomeId(home.getId()).forEach(homeImageTable -> {
                 images.add(homeImageTable.getImage().getImageName());
             });
             log.info("3. find all home policies");
-            homePolicyTableRepository.findByHomeId(id).forEach(homePolicyTable -> {
+            homePolicyTableRepository.findByHomeId(home.getId()).forEach(homePolicyTable -> {
                 homePolicies.add(homePolicyTable.getHomePolicy().getId());
             });
             log.info("4. find all home facilities");
-            homeFacilityTableRepository.findByHomeId(id).forEach(homeFacilityTable -> {
+            homeFacilityTableRepository.findByHomeId(home.getId()).forEach(homeFacilityTable -> {
                 homeFacilities.add(homeFacilityTable.getHomeFacility().getId());
             });
             log.info("5. find all home rooms");
-            homeRoomTableRepository.findByHomeId(id).forEach(homeRoomTable -> {
+            homeRoomTableRepository.findByHomeId(home.getId()).forEach(homeRoomTable -> {
                 rooms.add(homeRoomTable.getRoom());
             });
 
             log.info("6. prepare done");
             return HomeDto.builder()
-                    .homeId(id)
+                    .homeId(home.getId())
                     .homeName(home.getHomeName())
                     .homeAddress(home.getHomeAddress())
                     .coordinateX(home.getCoordinateX())
@@ -235,6 +232,19 @@ public class HomeServiceImpl implements HomeService {
                     .checkInTimeId(home.getCheckInTime().getId())
                     .checkOutTimeId(home.getCheckOutTime().getId())
                     .build();
+        } catch (Exception e) {
+            log.error("HomeService find Home failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeService find Home end");
+        }
+    }
+
+    @Override
+    public HomeDto findById(Long id) {
+        try {
+            log.info("HomeService find by id Home(id: {}) start", id);
+            return findHome(homeRepository.findById(id).get());
         } catch (Exception e) {
             log.error("HomeService find by id Home failure, error: {}", e.getMessage());
             return null;
@@ -414,10 +424,10 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public Home findByUserId(Long id) {
+    public HomeDto findByUserId(Long id) {
         try {
             log.info("HomeService find by user id Home start");
-            return homeRepository.findByUserId(id);
+            return findHome(homeRepository.findByUserId(id));
         } catch (Exception e) {
             log.error("HomeService find by user id Home failure, error: {}", e.getMessage());
             return null;

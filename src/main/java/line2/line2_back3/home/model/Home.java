@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 import line2.line2_back3.checkTime.model.CheckTime;
 import line2.line2_back3.homeCategory.model.HomeCategory;
-import line2.line2_back3.restApi.models.User;
 import line2.line2_back3.util.BaseTime;
 
 @Entity
