@@ -10,6 +10,7 @@ import line2.line2_back3.home.model.HomeListDto;
 import line2.line2_back3.home.model.HomeSearchDto;
 import line2.line2_back3.home.model.HomeStatusDto;
 import line2.line2_back3.home.service.HomeService;
+import line2.line2_back3.room.model.Room;
 import line2.line2_back3.systemMessage.SystemMessage;
 
 import java.util.List;
@@ -171,6 +172,20 @@ public class HomeControllerImpl implements HomeController {
             return null;
         } finally {
             log.info("HomeController find by user id Home end");
+        }
+    }
+
+    @Override
+    @GetMapping("/v1/home/calendar/{id}")
+    public List<Room> findRoomsByUserId(@PathVariable Long id) {
+        try {
+            log.info("HomeController find rooms by user id Home start");
+            return homeService.findRoomsByUserId(id);
+        } catch (Exception e) {
+            log.error("HomeController find rooms by user id Home failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeController find rooms by user id Home end");
         }
     }
 }

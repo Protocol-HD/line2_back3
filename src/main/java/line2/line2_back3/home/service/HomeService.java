@@ -7,6 +7,7 @@ import line2.line2_back3.home.model.HomeDto;
 import line2.line2_back3.home.model.HomeListDto;
 import line2.line2_back3.home.model.HomeSearchDto;
 import line2.line2_back3.home.model.HomeStatusDto;
+import line2.line2_back3.room.model.Room;
 import line2.line2_back3.systemMessage.SystemMessage;
 
 public interface HomeService {
@@ -29,4 +30,6 @@ public interface HomeService {
     SystemMessage changeStatus(HomeStatusDto homeStatusDto);
 
     HomeDto findByUserId(Long id);
+
+    List<Room> findRoomsByUserId(Long id);
 }

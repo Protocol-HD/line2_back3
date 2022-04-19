@@ -435,4 +435,21 @@ public class HomeServiceImpl implements HomeService {
             log.info("HomeService find by user id Home end");
         }
     }
+
+    @Override
+    public List<Room> findRoomsByUserId(Long id) {
+        try {
+            log.info("HomeService find rooms by user id Home start");
+            List<Room> rooms = new ArrayList<>();
+            homeRoomTableRepository.findByHomeId(homeRepository.findByUserId(id).getId()).forEach(homeRoom -> {
+                rooms.add(homeRoom.getRoom());
+            });
+            return rooms;
+        } catch (Exception e) {
+            log.error("HomeService find rooms by user id Home failure, error: {}", e.getMessage());
+            return null;
+        } finally {
+            log.info("HomeService find rooms by user id Home end");
+        }
+    }
 }
